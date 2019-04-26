@@ -6,7 +6,6 @@ use Ivoz\Core\Domain\Service\DomainEventPublisher;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
-use Ivoz\Core\Domain\Service\PersistErrorHandlerServiceCollection;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Ivoz\Core\Domain\Service\LifecycleEventHandlerInterface;
 
@@ -29,19 +28,6 @@ class LifecycleCompiler implements CompilerPassInterface
             $this->getLifecycleServices()
         );
 
-        $this->buildService(
-            $this->getErrorHandlerServices(),
-            PersistErrorHandlerServiceCollection::class
-        );
-
-
-        $commonErrorsHandlers = $this->getServicesByTag('lifecycle.common.error_handler');
-
-        $this->buildService(
-            ['lifecycle.common.error_handler' => $commonErrorsHandlers],
-            PersistErrorHandlerServiceCollection::class
-        );
-
         $domainEventPublisher = $this->container->getDefinition(DomainEventPublisher::class);
         $domainEventSubscribers = $this->getDomainEventSubscriberServices();
         foreach ($domainEventSubscribers as $domainEventSubscriber) {
@@ -62,14 +48,6 @@ class LifecycleCompiler implements CompilerPassInterface
 
             $collection = $this->container->getDefinition($tagCollectionClassName);
 
-            $eventCollection = $this->container->register($tag, $tagCollectionClassName);
-            $this->container->setAlias(
-                $tagCollectionClassName . '.' . $event,
-                $tag
-            );
-            $eventCollection->setPublic(true);
-            $eventCollection->setAutowired(true);
-
             foreach ($services as $key => $class) {
                 $tagProperties = is_subclass_of($class, LifecycleEventHandlerInterface::class)
                     ? $class::getSubscribedEvents()
@@ -82,14 +60,10 @@ class LifecycleCompiler implements CompilerPassInterface
                     );
                 }
 
-                $eventCollection->addTag(
-                    $class,
-                    $tagProperties
-                );
                 $services[$key] = new Reference($class);
             }
 
-            $eventCollection->addMethodCall('setServices', [$services]);
+            $collection->addMethodCall('setServices', [$event, $services]);
         }
     }
 
@@ -119,44 +93,7 @@ class LifecycleCompiler implements CompilerPassInterface
                     return false;
                 }
 
-                if (strpos($key, '.error_handler') !== false) {
-                    return false;
-                }
-
                 return true;
-            }, ARRAY_FILTER_USE_KEY);
-
-            if (empty($tags)) {
-                continue;
-            }
-
-            foreach ($tags as $name => $arguments) {
-                if (!array_key_exists($name, $services)) {
-                    $services[$name] = array();
-                }
-                $services[$name] = $this->getServicesByTag($name);
-            }
-        }
-
-        return $services;
-    }
-
-    protected function getErrorHandlerServices()
-    {
-        $services = [];
-        $servicesDefinitions = $this->container->getDefinitions();
-
-        /**
-         * @var Definition $definition
-         */
-        foreach ($servicesDefinitions as $definition) {
-            $tags = array_filter($definition->getTags(), function ($key) {
-
-                if (strpos($key, '.lifecycle.') === false) {
-                    return false;
-                }
-
-                return (strpos($key, '.error_handler') !== false);
             }, ARRAY_FILTER_USE_KEY);
 
             if (empty($tags)) {

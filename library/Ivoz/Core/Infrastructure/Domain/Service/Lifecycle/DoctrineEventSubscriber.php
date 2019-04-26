@@ -18,7 +18,9 @@ use Ivoz\Core\Domain\Model\EntityInterface;
 use Ivoz\Core\Domain\Model\LoggableEntityInterface;
 use Ivoz\Core\Domain\Service\CommonLifecycleServiceCollection;
 use Ivoz\Core\Domain\Service\DomainEventPublisher;
+use Ivoz\Core\Domain\Service\LifecycleEventHandlerInterface;
 use Ivoz\Core\Domain\Service\LifecycleServiceCollectionInterface;
+use Ivoz\Core\Domain\Service\PersistErrorHandlerInterface;
 use Ivoz\Core\Infrastructure\Persistence\Doctrine\Events as CustomEvents;
 use Ivoz\Core\Infrastructure\Persistence\Doctrine\OnCommitEventArgs;
 use Ivoz\Core\Infrastructure\Persistence\Doctrine\OnErrorEventArgs;
@@ -247,19 +249,16 @@ class DoctrineEventSubscriber implements EventSubscriber
 
     private function runSharedServices($eventName, LifecycleEventArgs $args)
     {
-        $serviceName = 'lifecycle.' . $eventName . '.common';
-
-        if (!$this->serviceContainer->has($serviceName)) {
-            return;
-        }
-
+        /** @var EntityInterface $entity */
         $entity = $args->getObject();
 
         /**
          * @var CommonLifecycleServiceCollection $service
          */
-        $service = $this->serviceContainer->get($serviceName);
-        $service->execute($entity);
+        $service = $this->serviceContainer->get(
+            CommonLifecycleServiceCollection::class
+        );
+        $service->execute($eventName, $entity);
     }
 
     private function runEntityServices($eventName, LifecycleEventArgs $args, bool $isNew)
@@ -269,7 +268,7 @@ class DoctrineEventSubscriber implements EventSubscriber
             $entity->markAsPersisted();
         }
 
-        $serviceName = LifecycleServiceHelper::getServiceNameByEntity($entity, $eventName);
+        $serviceName = LifecycleServiceHelper::getServiceNameByEntity($entity);
 
         if (!$this->serviceContainer->has($serviceName)) {
             return;
@@ -281,7 +280,7 @@ class DoctrineEventSubscriber implements EventSubscriber
         $service = $this->serviceContainer->get($serviceName);
 
         try {
-            $service->execute($entity);
+            $service->execute($eventName, $entity);
         } catch (\Exception $exception) {
             $this->handleError($entity, $exception);
         }
@@ -289,16 +288,17 @@ class DoctrineEventSubscriber implements EventSubscriber
 
     private function handleError(EntityInterface $entity, \Exception $exception)
     {
-        $errorHandlerName = LifecycleServiceHelper::getServiceNameByEntity($entity, 'error_handler');
-        if ($this->serviceContainer->has($errorHandlerName)) {
-            $errorHandler = $this->serviceContainer->get($errorHandlerName);
-            $errorHandler->execute($exception);
+        $event = LifecycleEventHandlerInterface::EVENT_ON_ERROR;
+        $serviceCollection = LifecycleServiceHelper::getServiceNameByEntity($entity);
+        if ($this->serviceContainer->has($serviceCollection)) {
+            $errorHandler = $this->serviceContainer->get($serviceCollection);
+            $errorHandler->handle($exception);
         }
 
         $commonErrorHandler = $this->serviceContainer->get(
-            'lifecycle.common.error_handler'
+            CommonLifecycleServiceCollection::class
         );
-        $commonErrorHandler->execute($exception);
+        $commonErrorHandler->handle($exception);
 
         throw $exception;
     }

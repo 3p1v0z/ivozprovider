@@ -2,6 +2,8 @@
 
 namespace Tests\Provider\ApplicationServer;
 
+use Ivoz\Core\Domain\Service\LifecycleEventHandlerInterface;
+use Ivoz\Provider\Domain\Service\ApplicationServer\ApplicationServerLifecycleServiceCollection;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Tests\DbIntegrationTestHelperTrait;
 use Ivoz\Provider\Domain\Model\ApplicationServer\ApplicationServer;
@@ -56,20 +58,28 @@ class ApplicationServerLifeCycleTest extends KernelTestCase
             ->expects($expectedTrunksCallMatcher)
             ->method('execute');
 
-        $onCommitService = $serviceContainer->get('provider.lifecycle.application_server.on_commit');
-        $onCommitServiceRef = new \ReflectionClass($onCommitService);
+        /////////////////////////////////////
+        ///
+        /////////////////////////////////////
+
+        $lifeCycleService = $serviceContainer->get(ApplicationServerLifecycleServiceCollection::class);
+        $onCommitServiceRef = new \ReflectionClass($lifeCycleService);
         $serviceProperty = $onCommitServiceRef->getProperty('services');
         $serviceProperty->setAccessible(true);
+        $services = $serviceProperty->getValue($lifeCycleService);
+
+        $services[LifecycleEventHandlerInterface::EVENT_ON_COMMIT] = [
+            $sendUsersDispatcherReloadRequest,
+            $sendTrunksDispatcherReloadRequest
+        ];
 
         $serviceProperty->setValue(
-            $onCommitService,
-            [
-                $sendUsersDispatcherReloadRequest,
-                $sendTrunksDispatcherReloadRequest
-            ]
+            $lifeCycleService,
+            $services
         );
+
         $serviceProperty->setAccessible(false);
-        $serviceContainer->set('provider.lifecycle.application_server.on_commit', $onCommitService);
+        $serviceContainer->set(ApplicationServerLifecycleServiceCollection::class, $lifeCycleService);
 
         return $this;
     }
