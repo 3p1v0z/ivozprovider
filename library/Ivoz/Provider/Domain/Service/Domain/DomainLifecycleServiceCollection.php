@@ -13,8 +13,8 @@ class DomainLifecycleServiceCollection implements LifecycleServiceCollectionInte
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(DomainLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, DomainLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

@@ -12,8 +12,8 @@ class ProxyUserLifecycleServiceCollection implements LifecycleServiceCollectionI
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(ProxyUserLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, ProxyUserLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

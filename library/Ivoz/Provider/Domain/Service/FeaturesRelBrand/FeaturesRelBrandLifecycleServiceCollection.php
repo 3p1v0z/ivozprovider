@@ -12,8 +12,8 @@ class FeaturesRelBrandLifecycleServiceCollection implements LifecycleServiceColl
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(FeaturesRelBrandLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, FeaturesRelBrandLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

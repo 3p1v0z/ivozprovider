@@ -12,8 +12,8 @@ class ApplicationServerLifecycleServiceCollection implements LifecycleServiceCol
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(ApplicationServerLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, ApplicationServerLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

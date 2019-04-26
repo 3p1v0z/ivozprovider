@@ -12,8 +12,8 @@ class DestinationLifecycleServiceCollection implements LifecycleServiceCollectio
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(DestinationLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, DestinationLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

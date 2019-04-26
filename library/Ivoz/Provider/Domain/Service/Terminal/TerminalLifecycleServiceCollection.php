@@ -12,8 +12,8 @@ class TerminalLifecycleServiceCollection implements LifecycleServiceCollectionIn
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(TerminalLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, TerminalLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

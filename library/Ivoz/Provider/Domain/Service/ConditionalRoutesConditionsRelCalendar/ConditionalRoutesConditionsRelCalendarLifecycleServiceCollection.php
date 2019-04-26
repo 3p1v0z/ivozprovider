@@ -12,8 +12,8 @@ class ConditionalRoutesConditionsRelCalendarLifecycleServiceCollection implement
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(ConditionalRoutesConditionsRelCalendarLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, ConditionalRoutesConditionsRelCalendarLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

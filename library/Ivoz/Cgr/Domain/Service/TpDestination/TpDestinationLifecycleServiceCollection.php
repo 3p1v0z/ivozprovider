@@ -12,8 +12,8 @@ class TpDestinationLifecycleServiceCollection implements LifecycleServiceCollect
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(TpDestinationLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, TpDestinationLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

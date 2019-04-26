@@ -12,8 +12,8 @@ class TpRateLifecycleServiceCollection implements LifecycleServiceCollectionInte
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(TpRateLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, TpRateLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

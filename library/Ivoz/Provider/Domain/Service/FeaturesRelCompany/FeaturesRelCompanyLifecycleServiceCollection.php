@@ -12,8 +12,8 @@ class FeaturesRelCompanyLifecycleServiceCollection implements LifecycleServiceCo
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(FeaturesRelCompanyLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, FeaturesRelCompanyLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

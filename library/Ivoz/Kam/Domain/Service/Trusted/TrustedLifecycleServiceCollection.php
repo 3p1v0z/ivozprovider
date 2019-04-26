@@ -12,8 +12,8 @@ class TrustedLifecycleServiceCollection implements LifecycleServiceCollectionInt
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(TrustedLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, TrustedLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

@@ -12,8 +12,8 @@ class ConditionalRoutesConditionsRelRouteLockLifecycleServiceCollection implemen
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(ConditionalRoutesConditionsRelRouteLockLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, ConditionalRoutesConditionsRelRouteLockLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

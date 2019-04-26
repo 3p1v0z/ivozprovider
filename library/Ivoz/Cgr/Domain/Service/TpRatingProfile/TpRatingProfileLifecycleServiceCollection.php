@@ -12,8 +12,8 @@ class TpRatingProfileLifecycleServiceCollection implements LifecycleServiceColle
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(TpRatingProfileLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, TpRatingProfileLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

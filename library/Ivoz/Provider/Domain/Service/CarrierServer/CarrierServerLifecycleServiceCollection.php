@@ -12,8 +12,8 @@ class CarrierServerLifecycleServiceCollection implements LifecycleServiceCollect
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(CarrierServerLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, CarrierServerLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

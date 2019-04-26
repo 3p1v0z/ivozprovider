@@ -12,8 +12,8 @@ class CallCsvSchedulerLifecycleServiceCollection implements LifecycleServiceColl
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(CallCsvSchedulerLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, CallCsvSchedulerLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

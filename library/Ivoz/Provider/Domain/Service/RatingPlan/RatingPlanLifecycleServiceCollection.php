@@ -12,8 +12,8 @@ class RatingPlanLifecycleServiceCollection implements LifecycleServiceCollection
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(RatingPlanLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, RatingPlanLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

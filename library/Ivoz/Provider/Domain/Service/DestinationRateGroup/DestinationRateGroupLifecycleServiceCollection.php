@@ -12,8 +12,8 @@ class DestinationRateGroupLifecycleServiceCollection implements LifecycleService
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(DestinationRateGroupLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, DestinationRateGroupLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

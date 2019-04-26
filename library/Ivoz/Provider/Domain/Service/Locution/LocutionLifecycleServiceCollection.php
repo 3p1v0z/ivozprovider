@@ -12,8 +12,8 @@ class LocutionLifecycleServiceCollection implements LifecycleServiceCollectionIn
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(LocutionLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, LocutionLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

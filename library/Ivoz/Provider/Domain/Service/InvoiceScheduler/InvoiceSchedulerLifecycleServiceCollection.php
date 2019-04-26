@@ -12,8 +12,8 @@ class InvoiceSchedulerLifecycleServiceCollection implements LifecycleServiceColl
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(InvoiceSchedulerLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, InvoiceSchedulerLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

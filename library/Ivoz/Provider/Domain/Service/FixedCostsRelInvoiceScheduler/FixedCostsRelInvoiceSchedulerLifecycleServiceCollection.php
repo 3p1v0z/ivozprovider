@@ -12,8 +12,8 @@ class FixedCostsRelInvoiceSchedulerLifecycleServiceCollection implements Lifecyc
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(FixedCostsRelInvoiceSchedulerLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, FixedCostsRelInvoiceSchedulerLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }

@@ -12,8 +12,8 @@ class ExternalCallFilterRelCalendarLifecycleServiceCollection implements Lifecyc
 {
     use LifecycleServiceCollectionTrait;
 
-    protected function addService(ExternalCallFilterRelCalendarLifecycleEventHandlerInterface $service)
+    protected function addService(string $event, ExternalCallFilterRelCalendarLifecycleEventHandlerInterface $service)
     {
-        $this->services[] = $service;
+        $this->services[$event][] = $service;
     }
 }
