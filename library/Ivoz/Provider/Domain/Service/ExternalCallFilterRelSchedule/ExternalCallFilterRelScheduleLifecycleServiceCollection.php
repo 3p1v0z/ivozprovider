@@ -12,6 +12,12 @@ class ExternalCallFilterRelScheduleLifecycleServiceCollection implements Lifecyc
 {
     use LifecycleServiceCollectionTrait;
 
+    public static $bindedBaseServices = [
+        "pre_persist" =>     [
+            \Ivoz\Provider\Domain\Service\ExternalCallFilterRelSchedule\AvoidUpdates::class => 100,
+        ],
+    ];
+
     protected function addService(string $event, ExternalCallFilterRelScheduleLifecycleEventHandlerInterface $service)
     {
         $this->services[$event][] = $service;

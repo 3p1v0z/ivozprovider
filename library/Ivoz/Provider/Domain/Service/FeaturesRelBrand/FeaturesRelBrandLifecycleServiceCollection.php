@@ -12,6 +12,12 @@ class FeaturesRelBrandLifecycleServiceCollection implements LifecycleServiceColl
 {
     use LifecycleServiceCollectionTrait;
 
+    public static $bindedBaseServices = [
+        "pre_persist" =>     [
+            \Ivoz\Provider\Domain\Service\FeaturesRelBrand\AvoidUpdates::class => 100,
+        ],
+    ];
+
     protected function addService(string $event, FeaturesRelBrandLifecycleEventHandlerInterface $service)
     {
         $this->services[$event][] = $service;

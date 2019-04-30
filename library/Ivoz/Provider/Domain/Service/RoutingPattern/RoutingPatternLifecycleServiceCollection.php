@@ -12,6 +12,15 @@ class RoutingPatternLifecycleServiceCollection implements LifecycleServiceCollec
 {
     use LifecycleServiceCollectionTrait;
 
+    public static $bindedBaseServices = [
+        "post_persist" =>     [
+            \Ivoz\Kam\Domain\Service\TrunksLcrRule\UpdateByRoutingPattern::class => 200,
+        ],
+        "on_commit" =>     [
+            \Ivoz\Provider\Infrastructure\Domain\Service\RoutingPattern\SendTrunksLcrReloadRequest::class => 200,
+        ],
+    ];
+
     protected function addService(string $event, RoutingPatternLifecycleEventHandlerInterface $service)
     {
         $this->services[$event][] = $service;

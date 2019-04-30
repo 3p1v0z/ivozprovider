@@ -12,6 +12,12 @@ class LocutionLifecycleServiceCollection implements LifecycleServiceCollectionIn
 {
     use LifecycleServiceCollectionTrait;
 
+    public static $bindedBaseServices = [
+        "on_commit" =>     [
+            \Ivoz\Provider\Domain\Service\Locution\SendRecodingOrder::class => 10,
+        ],
+    ];
+
     protected function addService(string $event, LocutionLifecycleEventHandlerInterface $service)
     {
         $this->services[$event][] = $service;

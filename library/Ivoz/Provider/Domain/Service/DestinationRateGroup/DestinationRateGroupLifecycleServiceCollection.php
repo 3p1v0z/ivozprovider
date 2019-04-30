@@ -12,6 +12,13 @@ class DestinationRateGroupLifecycleServiceCollection implements LifecycleService
 {
     use LifecycleServiceCollectionTrait;
 
+    public static $bindedBaseServices = [
+        "on_commit" =>     [
+            \Ivoz\Provider\Domain\Service\DestinationRateGroup\SendImporterOrder::class => 10,
+            \Ivoz\Provider\Domain\Service\DestinationRateGroup\UpdatedDestinationRateGroupNotificator::class => 200,
+        ],
+    ];
+
     protected function addService(string $event, DestinationRateGroupLifecycleEventHandlerInterface $service)
     {
         $this->services[$event][] = $service;

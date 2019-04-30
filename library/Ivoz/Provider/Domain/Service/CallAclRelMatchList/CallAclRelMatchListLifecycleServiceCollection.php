@@ -12,6 +12,12 @@ class CallAclRelMatchListLifecycleServiceCollection implements LifecycleServiceC
 {
     use LifecycleServiceCollectionTrait;
 
+    public static $bindedBaseServices = [
+        "pre_persist" =>     [
+            \Ivoz\Provider\Domain\Service\CallAclRelMatchList\AvoidUpdates::class => 100,
+        ],
+    ];
+
     protected function addService(string $event, CallAclRelMatchListLifecycleEventHandlerInterface $service)
     {
         $this->services[$event][] = $service;

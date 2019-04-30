@@ -12,6 +12,12 @@ class TpDestinationRateLifecycleServiceCollection implements LifecycleServiceCol
 {
     use LifecycleServiceCollectionTrait;
 
+    public static $bindedBaseServices = [
+        "on_commit" =>     [
+            \Ivoz\Cgr\Domain\Service\TpDestinationRate\UpdatedTpDestinationRateNotificator::class => 200,
+        ],
+    ];
+
     protected function addService(string $event, TpDestinationRateLifecycleEventHandlerInterface $service)
     {
         $this->services[$event][] = $service;

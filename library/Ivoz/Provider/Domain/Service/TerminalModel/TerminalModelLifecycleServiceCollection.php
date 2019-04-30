@@ -12,6 +12,12 @@ class TerminalModelLifecycleServiceCollection implements LifecycleServiceCollect
 {
     use LifecycleServiceCollectionTrait;
 
+    public static $bindedBaseServices = [
+        "post_persist" =>     [
+            \Ivoz\Provider\Domain\Service\TerminalModel\PersistTemplates::class => 10,
+        ],
+    ];
+
     protected function addService(string $event, TerminalModelLifecycleEventHandlerInterface $service)
     {
         $this->services[$event][] = $service;

@@ -12,6 +12,13 @@ class DestinationRateLifecycleServiceCollection implements LifecycleServiceColle
 {
     use LifecycleServiceCollectionTrait;
 
+    public static $bindedBaseServices = [
+        "post_persist" =>     [
+            \Ivoz\Cgr\Domain\Service\TpRate\UpdatedByDestinationRate::class => 200,
+            \Ivoz\Cgr\Domain\Service\TpDestinationRate\UpdatedByDestinationRate::class => 201,
+        ],
+    ];
+
     protected function addService(string $event, DestinationRateLifecycleEventHandlerInterface $service)
     {
         $this->services[$event][] = $service;

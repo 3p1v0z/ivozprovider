@@ -12,6 +12,16 @@ class ExtensionLifecycleServiceCollection implements LifecycleServiceCollectionI
 {
     use LifecycleServiceCollectionTrait;
 
+    public static $bindedBaseServices = [
+        "post_persist" =>     [
+            \Ivoz\Provider\Domain\Service\User\UpdateByExtension::class => 10,
+            \Ivoz\Ast\Domain\Service\PsEndpoint\UpdateByExtension::class => 20,
+        ],
+        "pre_remove" =>     [
+            \Ivoz\Provider\Domain\Service\Ivr\UpdateByExtension::class => 10,
+        ],
+    ];
+
     protected function addService(string $event, ExtensionLifecycleEventHandlerInterface $service)
     {
         $this->services[$event][] = $service;

@@ -12,6 +12,12 @@ class TpTimingLifecycleServiceCollection implements LifecycleServiceCollectionIn
 {
     use LifecycleServiceCollectionTrait;
 
+    public static $bindedBaseServices = [
+        "on_commit" =>     [
+            \Ivoz\Cgr\Domain\Service\TpTiming\UpdatedTpTimingNotificator::class => 200,
+        ],
+    ];
+
     protected function addService(string $event, TpTimingLifecycleEventHandlerInterface $service)
     {
         $this->services[$event][] = $service;

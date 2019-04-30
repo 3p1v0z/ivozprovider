@@ -12,6 +12,12 @@ class QueueLifecycleServiceCollection implements LifecycleServiceCollectionInter
 {
     use LifecycleServiceCollectionTrait;
 
+    public static $bindedBaseServices = [
+        "post_persist" =>     [
+            \Ivoz\Ast\Domain\Service\Queue\UpdateByIvozQueue::class => 10,
+        ],
+    ];
+
     protected function addService(string $event, QueueLifecycleEventHandlerInterface $service)
     {
         $this->services[$event][] = $service;
