@@ -13,6 +13,8 @@ use Ivoz\Provider\Domain\Service\Company\CompanyLifecycleEventHandlerInterface;
  */
 class DeleteByCompany implements CompanyLifecycleEventHandlerInterface
 {
+    const POST_REMOVE_PRIORITY = 10;
+
     /**
      * @var EntityManagerInterface
      */
@@ -32,7 +34,7 @@ class DeleteByCompany implements CompanyLifecycleEventHandlerInterface
     public static function getSubscribedEvents()
     {
         return [
-            self::EVENT_POST_REMOVE => 10
+            self::EVENT_POST_REMOVE => self::POST_REMOVE_PRIORITY
         ];
     }
 
@@ -42,10 +44,11 @@ class DeleteByCompany implements CompanyLifecycleEventHandlerInterface
     public function execute(CompanyInterface $company)
     {
         $domain = $company->getDomain();
-
-        if ($domain && $company->getType() === Company::VPBX) {
-            $this->em->remove($domain);
-            $company->setDomain(null);
+        if (!$domain) {
+            return;
         }
+
+        $company->setDomain(null);
+        $this->em->remove($domain);
     }
 }
