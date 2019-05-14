@@ -93,7 +93,7 @@ Ivoz\Provider\Domain\Model\Currency\Currency:
   collectionOperations:
     get: ~
   attributes:
-    access_control: '"ROLE_USER" in roles'
+    access_control: '"ROLE_BRAND_ADMIN" in roles'
 
 Ivoz\Provider\Domain\Model\Country\Name:
 Ivoz\Provider\Domain\Model\Country\Zone:
@@ -238,6 +238,8 @@ Ivoz\Provider\Domain\Model\Invoice\Invoice:
       ROLE_BRAND_ADMIN:
         company:
           in: "companyRepository.getSupervisedCompanyIdsByAdmin(user)"
+        brand:
+          eq: "user.getBrand().getId()"
 
 Ivoz\Provider\Domain\Model\InvoiceNumberSequence\InvoiceNumberSequence:
   attributes:
@@ -262,7 +264,7 @@ Ivoz\Provider\Domain\Model\Language\Language:
   collectionOperations:
     get: ~
   attributes:
-    access_control: '"ROLE_USER" in roles'
+    access_control: '"ROLE_BRAND_ADMIN" in roles'
 
 Ivoz\Provider\Domain\Model\NotificationTemplate\NotificationTemplate:
   attributes:

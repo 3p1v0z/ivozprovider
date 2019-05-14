@@ -41,12 +41,12 @@ Ivoz\Provider\Domain\Model\CallForwardSetting\CallForwardSetting:
   attributes:
     access_control: '("ROLE_COMPANY_ADMIN" in roles) or ("ROLE_COMPANY_USER" in roles)'
     read_access_control:
-      ROLE_COMPANY_USER:
-        user:
-          eq: "user.getId()"
       ROLE_COMPANY_ADMIN:
         user:
           in: "userRepository.getSupervisedUserIdsByAdmin(user)"
+      ROLE_COMPANY_USER:
+        user:
+          eq: "user.getId()"
 Ivoz\Provider\Domain\Model\Company\Company:
   itemOperations: []
   collectionOperations: []
@@ -54,7 +54,7 @@ Ivoz\Provider\Domain\Model\Company\Company:
     access_control: '"ROLE_COMPANY_ADMIN" in roles'
     read_access_control:
       ROLE_COMPANY_ADMIN:
-        company:
+        id:
           eq: "user.getCompany().getId()"
 Ivoz\Provider\Domain\Model\CompanyService\CompanyService:
   attributes:
@@ -154,6 +154,12 @@ Ivoz\Provider\Domain\Model\Ddi\Ddi:
       ROLE_COMPANY_ADMIN:
         company:
           eq: "user.getCompany().getId()"
+    write_access_control:
+      ROLE_COMPANY_ADMIN:
+        company:
+          eq: "user.getCompany().getId()"
+        brand:
+          eq: "user.getBrand().getId()"
 Ivoz\Provider\Domain\Model\Extension\Extension:
   attributes:
     access_control: '"ROLE_COMPANY_ADMIN" in roles'
@@ -524,9 +530,9 @@ Ivoz\Provider\Domain\Model\User\User:
   attributes:
     access_control: '("ROLE_COMPANY_ADMIN" in roles) or ("ROLE_COMPANY_USER" in roles)'
     read_access_control:
-      ROLE_COMPANY_USER:
-        id:
-          eq: "user.getId()"
       ROLE_COMPANY_ADMIN:
         company:
           eq: "user.getCompany().getId()"
+      ROLE_COMPANY_USER:
+        id:
+          eq: "user.getId()"
