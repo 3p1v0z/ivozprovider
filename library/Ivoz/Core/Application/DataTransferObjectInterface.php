@@ -22,17 +22,17 @@ interface DataTransferObjectInterface
     /**
      * @return array
      */
-    public function normalize(string $context);
+    public function normalize(string $context, string $rol = '');
 
     /**
      * @return void
      */
-    public function denormalize(array $data, string $context);
+    public function denormalize(array $data, string $context, string $rol = '');
 
     /**
      * @return array
      */
-    public static function getPropertyMap(string $context = '');
+    public static function getPropertyMap(string $context = '', string $rol = null);
 
     /**
      * @return array
