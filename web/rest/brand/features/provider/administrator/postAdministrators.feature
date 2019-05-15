@@ -18,7 +18,6 @@ Feature: Create administrators
           "name": "post",
           "lastname": "test",
           "id": 1,
-          "brand": 1,
           "company": null,
           "timezone": 145
       }
@@ -112,7 +111,6 @@ Feature: Create administrators
           "name": "post",
           "lastname": "test",
           "id": 1,
-          "brand": 1,
           "company": 99,
           "timezone": 1
       }

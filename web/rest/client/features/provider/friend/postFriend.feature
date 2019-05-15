@@ -26,7 +26,6 @@ Feature: Create friends
           "updateCallerid": "yes",
           "fromDomain": "",
           "directConnectivity": "yes",
-          "company": 1,
           "callAcl": null,
           "outgoingDdi": null,
           "language": null

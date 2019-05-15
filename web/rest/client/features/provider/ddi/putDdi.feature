@@ -19,7 +19,6 @@ Feature: Update Ddis
           "billInboundCalls": false,
           "friendValue": "",
           "company": 1,
-          "brand": 1,
           "conferenceRoom": null,
           "language": null,
           "queue": null,

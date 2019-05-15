@@ -72,7 +72,7 @@ Feature: Retrieve companies
               }
           },
           "defaultTimezone": {
-              "tz": "Europe/Madrid",
+              "tz": "Europe\/Madrid",
               "comment": "mainland",
               "id": 145,
               "label": {
@@ -83,10 +83,6 @@ Feature: Retrieve companies
           },
           "brand": {
               "name": "DemoBrand",
-              "domainUsers": "",
-              "recordingsLimitMB": null,
-              "recordingsLimitEmail": "",
-              "maxCalls": 0,
               "id": 1,
               "logo": {
                   "fileSize": null,
@@ -102,16 +98,9 @@ Feature: Retrieve companies
                   "country": "",
                   "registryData": ""
               },
-              "domain": 6,
               "language": 1,
               "defaultTimezone": 145,
               "currency": 2
-          },
-          "domain": {
-              "domain": "127.0.0.1",
-              "pointsTo": "proxyusers",
-              "description": "DemoCompany proxyusers domain",
-              "id": 3
           },
           "country": {
               "code": "ES",
@@ -119,7 +108,7 @@ Feature: Retrieve companies
               "id": 68,
               "name": {
                   "en": "Spain",
-                  "es": "España"
+                  "es": "Espa\u00f1a"
               },
               "zone": {
                   "en": "Europe",

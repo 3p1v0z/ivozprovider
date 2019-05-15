@@ -36,7 +36,6 @@ Feature: Update company
           "mediaRelaySets": 1,
           "defaultTimezone": 1,
           "brand": 1,
-          "domain": 3,
           "applicationServer": null,
           "country": 68,
           "transformationRuleSet": 1,
@@ -92,12 +91,6 @@ Feature: Update company
               "country": 1
           },
           "brand": "~",
-          "domain": {
-              "domain": "127.0.0.1",
-              "pointsTo": "proxyusers",
-              "description": "DemoCompanyUpdated proxyusers domain",
-              "id": 3
-          },
           "country": {
               "code": "ES",
               "countryCode": "+34",

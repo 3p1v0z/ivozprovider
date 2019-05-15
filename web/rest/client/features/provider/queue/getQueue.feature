@@ -48,10 +48,7 @@ Feature: Retrieve queues
           "company": {
               "type": "vpbx",
               "name": "DemoCompany",
-              "domainUsers": "127.0.0.1",
               "nif": "12345678A",
-              "distributeMethod": "hash",
-              "maxCalls": 0,
               "postalAddress": "Company Address",
               "postalCode": "54321",
               "town": "Company Town",
@@ -60,7 +57,6 @@ Feature: Retrieve queues
               "ipfilter": false,
               "onDemandRecord": 0,
               "onDemandRecordCode": "",
-              "externallyextraopts": "",
               "recordingsLimitMB": null,
               "recordingsLimitEmail": "",
               "billingMethod": "prepaid",

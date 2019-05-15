@@ -25,7 +25,6 @@ Feature: Create residential devices
           "updateCallerid": "yes",
           "fromDomain": null,
           "directConnectivity": "yes",
-          "company": 1,
           "outgoingDdi": null,
           "language": null
       }
