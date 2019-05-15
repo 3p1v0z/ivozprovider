@@ -156,7 +156,7 @@ abstract class FriendDtoAbstract implements DataTransferObjectInterface
     /**
      * @inheritdoc
      */
-    public static function getPropertyMap(string $context = '')
+    public static function getPropertyMap(string $context = '', string $rol = null)
     {
         if ($context === self::CONTEXT_COLLECTION) {
             return ['id' => 'id'];
